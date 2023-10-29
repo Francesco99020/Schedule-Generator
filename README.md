@@ -1,5 +1,5 @@
 # Schedule Generator
- Generates a schedule based on number of employees needed.
+ Generates a schedule based on number of employees needed and the employee distance from the job site.
 
 # To run Project
 

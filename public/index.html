@@ -8,19 +8,24 @@
 </head>
 <body>
     <div class="schedule-container">
-
+        <!-- Your schedules go here -->
     </div>
-    <label for="numberDropdown">How many employees are needed:</label>
-    <select id="numberDropdown">
-        <option value="" disabled selected>Select a number</option>
-        <!-- Generate options from 1 to 25 -->
-        <script>
-            for (let i = 1; i <= 25; i++) {
-                document.write(`<option value="${i}">${i}</option>`);
-            }
-        </script>
-    </select>
-    <button id="generate-button">Generate Schedule</button>
+    <div class="controls-container">
+        <label for="numberDropdown">How many employees are needed:</label>
+        <select id="numberDropdown">
+            <option value="" disabled selected>Select a number</option>
+            <!-- Generate options from 1 to 25 -->
+            <script>
+                for (let i = 1; i <= 25; i++) {
+                    document.write(`<option value="${i}">${i}</option>`);
+                }
+            </script>
+        </select>
+        <!-- Move the "Generate Schedule" button below -->
+        <label for="zipCode">Jobsite Zip Code:</label>
+        <input type="text" id="zipCode" name="zipCode" placeholder="Enter Zip Code">
+        <button id="generate-button">Generate Schedule</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

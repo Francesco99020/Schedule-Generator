@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const { GenerateNewSchedule } = require('./scheduleGenerator');
+const { getDistancesFromTarget } = require('./postalCompare');
+const { mockApiData } = require('./mockData');
+const { sortEmployeesByDist } = require('./sortByDist');
 
 const app = express();
 app.use(cors());
@@ -8,9 +11,25 @@ app.use(express.json());
 
 app.post('/api/schedule/generator', (req, res) => {
     try {
-        const request = Number(req.body.message);
+        const request = req.body;
 
-        const response = GenerateNewSchedule(request);
+        //extract request params
+        const employeesNeeded = request.employeesNeeded;
+        const JobsiteZipCode = request.JobsiteZipCode;
+
+        //extracts all employee zipcodes (would possibly store in mongo for lookup)
+        let employeeZipCodes = [];
+        for(i = 0; i < mockApiData.length; i++){
+            employeeZipCodes.push(mockApiData[i].postalCode);
+        }
+
+        //returns dist from jobsite
+        const employeeDistFromJobsite = getDistancesFromTarget(JobsiteZipCode, employeeZipCodes);
+
+        //sort employees by dist of jobsite
+        const sortedEmployeesByDist = sortEmployeesByDist(mockApiData ,employeeDistFromJobsite)
+
+        const response = GenerateNewSchedule(employeesNeeded, sortedEmployeesByDist);
 
         res.json({ message: response });
     } catch (error) {
